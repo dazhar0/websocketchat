@@ -1,0 +1,1 @@
+CREATE TABLE users (...); CREATE TABLE messages (...);
