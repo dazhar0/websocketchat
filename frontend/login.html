@@ -1,2 +1,36 @@
 <!DOCTYPE html>
-<html><head><title>Login</title></head><body>Login Page</body></html>
+<html>
+<head>
+  <title>Login - SecureChat</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="chat-box">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" /><br><br>
+    <input type="password" id="password" placeholder="Password" /><br><br>
+    <button onclick="login()">Login</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    function login() {
+      fetch("login.php", {
+        method: "POST",
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success) {
+          localStorage.setItem("username", document.getElementById("username").value);
+          window.location.href = "chat.html";
+        } else {
+          document.getElementById("status").innerText = "Login failed!";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

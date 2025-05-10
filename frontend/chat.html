@@ -1,2 +1,50 @@
 <!DOCTYPE html>
-<html><head><title>Chat</title></head><body>Chat Interface</body></html>
+<html>
+<head>
+  <title>Chat - SecureChat</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="chat-box">
+    <h2>SecureChat Room</h2>
+    <div id="messages" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+    <input type="text" id="msg" placeholder="Type your message..." />
+    <button onclick="send()">Send</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script src="js/encryption.js"></script>
+  <script>
+    const username = localStorage.getItem("username");
+    if (!username) window.location.href = "login.html";
+
+    const ws = new WebSocket("wss://your-websocket-server.onrender.com");
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const div = document.getElementById("messages");
+      const msg = document.createElement("div");
+      msg.innerText = data.username + ": " + decryptMessage(data.message);
+      div.appendChild(msg);
+      div.scrollTop = div.scrollHeight;
+    };
+
+    function send() {
+      const raw = document.getElementById("msg").value;
+      const enc = encryptMessage(raw);
+      ws.send(JSON.stringify({ username, message: enc }));
+      fetch("send_message.php", {
+        method: "POST",
+        body: JSON.stringify({ username, message: enc })
+      });
+      document.getElementById("msg").value = "";
+    }
+
+    function logout() {
+      localStorage.removeItem("username");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

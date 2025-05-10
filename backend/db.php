@@ -1,4 +1,11 @@
 <?php
-$host = 'your_host'; $user = 'your_user'; $pass = 'your_pass'; $db = 'your_db';
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) die('Connection failed: ' . $conn->connect_error);
+$host = 'sqlXXX.infinityfree.com';
+$user = 'epiz_XXXXXXX';
+$pass = 'your_db_password';
+$dbname = 'epiz_XXXXXXX_yourdb';
+
+$conn = new mysqli($host, $user, $pass, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
