@@ -1,4 +1,4 @@
-const ws = new WebSocket("wss://your-render-url.onrender.com");
+const ws = new WebSocket("wss://websocketchat-1.onrender.com");
 
 ws.onmessage = (msg) => {
   const data = JSON.parse(msg.data);

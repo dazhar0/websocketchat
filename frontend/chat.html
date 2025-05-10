@@ -19,7 +19,7 @@
     const username = localStorage.getItem("username");
     if (!username) window.location.href = "login.html";
 
-    const ws = new WebSocket("wss://your-websocket-server.onrender.com");
+    const ws = new WebSocket("wss://websocketchat-1.onrender.com");
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
